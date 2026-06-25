@@ -5,12 +5,12 @@ const blogs = [
 
 ]
 
-//let nextId = blogs.length + 1
+let nextId = blogs.length + 1
 
 export const getBlogs = () => {
   return blogs
 }
 
-// export const addNote = (content: string, important: boolean) => {
-//   notes.push({ id: nextId++, content, important })
-// }
+export const addBlog = (title: string, author: string, url: string) => {
+  blogs.push({ id: nextId++, title, author, url, likes:0 })
+}
