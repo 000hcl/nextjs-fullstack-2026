@@ -20,7 +20,7 @@ const newBlog = () => {
         <div>
           <label>
             Url
-            <input type="text" name="title" required />
+            <input type="text" name="url" required />
           </label>
         </div>
         <button type="submit">Create</button>
