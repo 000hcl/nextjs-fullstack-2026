@@ -1,10 +1,14 @@
+"use client"
 import { createBlog } from "@/app/actions/blogs"
+import { useActionState } from "react"
 
 const newBlog = () => {
+  const [state, formAction] = useActionState(createBlog, { error: "" })
+
   return (
     <div>
       <h2>Create a new blog</h2>
-      <form action={createBlog}>
+      <form action={formAction}>
         <div>
           <label>
             Title
@@ -25,6 +29,9 @@ const newBlog = () => {
         </div>
         <button type="submit">Create</button>
       </form>
+      <div>
+        {state.error && <p style={{ color: "red" }}>{state.error}</p>}
+      </div>
     </div>
   )
 }
