@@ -22,6 +22,20 @@
       "when": 1784038550067,
       "tag": "0002_third_darkstar",
       "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1784116528567,
+      "tag": "0003_perfect_black_tarantula",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1784122069065,
+      "tag": "0004_bitter_shooting_star",
+      "breakpoints": true
     }
   ]
 }
