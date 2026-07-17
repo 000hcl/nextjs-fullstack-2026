@@ -22,7 +22,7 @@ export const createBlog = async (
   prevState: BlogState,
   formData: FormData
 ) => {
-    const errors: {
+  const errors: {
     title?: string
     author?: string
     url?: string

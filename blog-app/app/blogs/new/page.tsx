@@ -3,7 +3,6 @@ import { createBlog } from "@/app/actions/blogs"
 import { useActionState } from "react"
 
 const NewBlog = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const initialState = {errors: {title: '', author: '', url:''}, values: {title: '', author: '', url:''}}
   const [state, formAction] = useActionState(createBlog, initialState)
 
