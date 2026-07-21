@@ -1,60 +1,67 @@
 "use client"
 import { registerUser } from "../actions/users"
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useNotification } from "@/app/components/NotificationContext"
+
 
 const RegisterPage = () => {
   const initialState = { 
-    errors: {
-      username: '',
-      name: '',
-      password: '',
-      passwordConfirm: ''
-    }, 
+    error: '', 
     values: {
       username: '',
       name: '',
       password: '',
       passwordConfirm: ''
-  }}
+    },
+    success: false
+  }
   const [state, formAction] = useActionState(registerUser, initialState)
+  const { showNotification } = useNotification()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state?.success) {
+      showNotification('user registered successfully')
+      router.push('/login')
+    }
+
+  }, [state, showNotification, router])
+
   return (
-    <div>
-      <h2>Register</h2>
-      <form action={formAction}>
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">Register</h2>
+      <form action={formAction} className="space-y-2">
         <div>
-          <label>
-            Username
-            <input type="text" name="username" defaultValue={state.values?.username} required />
-          </label>
           <div>
-            {state.errors.username && <p style={{ color: "red" }}>{state.errors.username}</p>}
+            {state.error && <p style={{ color: "red" }}>{state.error}</p>}
           </div>
+          <label className="text-gray-500 text-s">
+            Username 
+            <input type="text" name="username" defaultValue={state.values?.username} required className="border rounded p-1"/>
+          </label>
+
         </div>
         <div>
-          <label>
-            Name
-            <input type="text" name="name" defaultValue={state.values?.name} required />
+          <label className="text-gray-500 text-s">
+            Name 
+            <input type="text" name="name" defaultValue={state.values?.name} required className="border rounded p-1"/>
           </label>
         </div>
         <div>
-          <label>
-            Password
-            <input type="password" name="password" defaultValue={state.values?.password} required />
+          <label className="text-gray-500 text-s">
+            Password 
+            <input type="password" name="password" defaultValue={state.values?.password} required className="border rounded p-1"/>
           </label>
-          <div>
-            {state.errors.password && <p style={{ color: "red" }}>{state.errors.password}</p>}
-          </div>
         </div>
         <div>
-          <label>
-            Confirm password
-            <input type="password" name="passwordConfirm" defaultValue={state.values?.passwordConfirm} required />
+          <label className="text-gray-500 text-s">
+            Confirm password 
+            <input type="password" name="passwordConfirm" defaultValue={state.values?.passwordConfirm} required className="border rounded p-1"/>
           </label>
-          <div>
-            {state.errors.passwordConfirm && <p style={{ color: "red" }}>{state.errors.passwordConfirm}</p>}
-          </div>
+
         </div>
-        <button type="submit">Register</button>
+        <button type="submit" className="border rounded p-1 hover:bg-emerald-200">Register</button>
       </form>
     </div>
   )

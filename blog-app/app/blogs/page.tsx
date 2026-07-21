@@ -11,17 +11,17 @@ const Blogs = async ({
   const allBlogs = await getBlogs(filter ? filter: '')
   const blogs = allBlogs.sort((a,b) => b.likes-a.likes)
   return (
-    <div>
-      <h2>Blogs</h2>
-      <div>
-        <form action={filterBlogs}>
-          <input type="text" name="filterInput"></input>
-          <button type="submit">search</button>
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">Blogs</h2>
+      <div className="mb-4">
+        <form action={filterBlogs} className="space-x-2">
+          <input type="text" name="filterInput" className="border rounded p-1"></input>
+          <button type="submit" className="border rounded p-1 hover:bg-emerald-200">search</button>
         </form>
       </div>
-      <ul>
+      <ul className="space-y-2">
         {blogs.map(b => (
-          <li key={b.id}>
+          <li key={b.id} className="border rounded p-3 hover:bg-gray-50">
             <Link href={`/blogs/${b.id}`}>
               {b.title} by {b.author}: {b.url} <b>{b.likes} likes</b>
             </Link>

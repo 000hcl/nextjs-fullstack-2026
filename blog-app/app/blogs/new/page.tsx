@@ -1,43 +1,60 @@
 "use client"
 import { createBlog } from "@/app/actions/blogs"
-import { useActionState } from "react"
+import { useActionState, useEffect } from "react"
+import { useRouter } from "next/navigation"
+import { useNotification } from "../../components/NotificationContext"
 
 const NewBlog = () => {
-  const initialState = {errors: {title: '', author: '', url:''}, values: {title: '', author: '', url:''}}
+  const initialState = {
+    error: "",
+    success: false,
+    values: {
+      title: "",
+      author: "",
+      url: "",
+    }
+  }
   const [state, formAction] = useActionState(createBlog, initialState)
+  const { showNotification } = useNotification()
+  const router = useRouter()
+
+  useEffect(() => {
+    if (state?.success) {
+      showNotification('blog created')
+      router.push('/blogs')
+    }
+
+  }, [state, showNotification, router])
 
   return (
-    <div>
-      <h2>Create a new blog</h2>
-      <form action={formAction}>
+    <div className="max-w-2xl mx-auto p-6">
+      <h2 className="text-2xl font-bold mb-4">Create a new blog</h2>
+      <form action={formAction} className="space-y-2">
         <div>
-          <label>
+          <div>
+            {state.error && <p style={{ color: "red" }}>{state.error}</p>}
+          </div>
+          <label className="text-gray-500 text-s">
             Title
-            <input type="text" name="title" defaultValue={state.values?.title} required />
+            <input type="text" name="title" defaultValue={state.values?.title} required className="border rounded p-1"/>
           </label>
-          <div>
-            {state.errors.title && <p style={{ color: "red" }}>{state.errors.title}</p>}
-          </div>
+
         </div>
         <div>
-          <label>
+          <label className="text-gray-500 text-s">
             Author
-            <input type="text" name="author" defaultValue={state.values?.author} required />
+            <input type="text" name="author" defaultValue={state.values?.author} required className="border rounded p-1"/>
           </label>
-          <div>
-            {state.errors.author && <p style={{ color: "red" }}>{state.errors.author}</p>}
-          </div>
+
         </div>
         <div>
-          <label>
+          <label className="text-gray-500 text-s">
             Url
-            <input type="text" name="url" defaultValue={state.values?.url} required />
+            <input type="text" name="url" defaultValue={state.values?.url} required className="border rounded p-1"/>
           </label>
-          <div>
-            {state.errors.url && <p style={{ color: "red" }}>{state.errors.url}</p>}
-          </div>
+
         </div>
-        <button type="submit">Create</button>
+        <button type="submit" className="border rounded p-1 hover:bg-emerald-200">Create</button>
       </form>
 
     </div>
