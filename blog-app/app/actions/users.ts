@@ -3,8 +3,10 @@
 import bcrypt from "bcryptjs"
 import { db } from "../../db"
 import { users } from "../../db/schema"
+import { eq } from "drizzle-orm";
 import { getUserByUsername } from "../services/users"
 import { revalidatePath } from "next/cache"
+import { getCurrentUser } from "../services/session"
 
 type UserState = {
   error?: string
@@ -65,4 +67,15 @@ export const registerUser = async (
   await db.insert(users).values({ username, name, passwordHash })
   revalidatePath("/users")
   return { error: '', success: true}
+}
+
+export const createNewToken = async () => {
+  const user = await getCurrentUser()
+  const id = user?.id
+  const newToken = crypto.randomUUID()
+  if (id) {
+    await db.update(users).set({ token: newToken}).where(eq(users.id, id))
+    revalidatePath("/me")
+  }
+  
 }

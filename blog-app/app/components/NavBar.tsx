@@ -11,6 +11,7 @@ export default function NavBar() {
       <NavLink href="/">home</NavLink>
       <NavLink href="/blogs">blogs</NavLink>
       <NavLink href="/users">users</NavLink>
+      <NavLink href="/me">me</NavLink>
 
       {session ? (
         <>
