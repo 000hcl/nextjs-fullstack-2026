@@ -15,11 +15,11 @@ const Blogs = async ({
       <h2 className="text-2xl font-bold mb-4">Blogs</h2>
       <div className="mb-4">
         <form action={filterBlogs} className="space-x-2">
-          <input type="text" name="filterInput" className="border rounded p-1"></input>
-          <button type="submit" className="border rounded p-1 hover:bg-emerald-200">search</button>
+          <input type="text" name="filterInput" data-testid='filter-input' className="border rounded p-1"></input>
+          <button type="submit" data-testid="search-button" className="border rounded p-1 hover:bg-emerald-200">search</button>
         </form>
       </div>
-      <ul className="space-y-2">
+      <ul className="space-y-2" data-testid="blogs-list">
         {blogs.map(b => (
           <li key={b.id} className="border rounded p-3 hover:bg-gray-50">
             <Link href={`/blogs/${b.id}`}>

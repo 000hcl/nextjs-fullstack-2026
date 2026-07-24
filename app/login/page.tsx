@@ -3,10 +3,12 @@
 import { signIn } from "next-auth/react"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import { useNotification } from "../components/NotificationContext"
 
 export default function LoginPage() {
   const router = useRouter()
   const [error, setError] = useState("")
+  const { showNotification } = useNotification()
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -21,6 +23,7 @@ export default function LoginPage() {
     if (result?.error) {
       setError("Invalid username or password")
     } else {
+      showNotification('Successfully logged in!')
       router.push("/")
       router.refresh()
     }
@@ -29,7 +32,7 @@ export default function LoginPage() {
   return (
     <div className="max-w-2xl mx-auto p-6">
       <h2 className="text-2xl font-bold mb-4">Login</h2>
-      {error && <p style={{ color: "red" }}>{error}</p>}
+      {error && <p style={{ color: "red" }} data-testid='error-message'>{error}</p>}
       <form onSubmit={handleSubmit} className="space-y-2">
         <div>
           <label className="text-gray-500 text-s">
@@ -43,7 +46,7 @@ export default function LoginPage() {
             <input type="password" name="password" required className="border rounded p-1"/>
           </label>
         </div>
-        <button type="submit" className="border rounded p-1 hover:bg-emerald-200">Login</button>
+        <button type="submit" data-testid="login-button" className="border rounded p-1 hover:bg-emerald-200">Login</button>
       </form>
     </div>
   )

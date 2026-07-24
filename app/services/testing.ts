@@ -1,10 +1,24 @@
 import { db } from "../../db"
 import bcrypt from "bcryptjs"
 import { sql } from "drizzle-orm"
-import { users } from "../../db/schema"
+import { users, readingList, blogs } from "../../db/schema"
 
 export const reset = async () => {
-  await db.execute(sql`TRUNCATE TABLE blogs, readingList, users RESTART IDENTITY CASCADE`);
+  console.log("RESETTING DATABASE")
+  try {
+    await db.delete(readingList)
+    await db.delete(blogs)
+    await db.delete(users)
+
+  } catch (error) {
+    console.log(error)
+  }
+
+  const result = await db.execute(sql`
+    SELECT COUNT(*) FROM users
+  `)
+
+  console.log("USERS AFTER RESET:", result.rows)
 }
 
 type User = {

@@ -49,12 +49,12 @@ const NewBlog = () => {
         </div>
         <div>
           <label className="text-gray-500 text-s">
-            Url
+            URL
             <input type="text" name="url" defaultValue={state.values?.url} required className="border rounded p-1"/>
           </label>
 
         </div>
-        <button type="submit" className="border rounded p-1 hover:bg-emerald-200">Create</button>
+        <button type="submit" data-testid="create-blog-button" className="border rounded p-1 hover:bg-emerald-200">Create</button>
       </form>
 
     </div>

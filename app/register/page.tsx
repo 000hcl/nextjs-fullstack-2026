@@ -7,7 +7,11 @@ import { useNotification } from "@/app/components/NotificationContext"
 
 const RegisterPage = () => {
   const initialState = { 
-    error: '', 
+    errors: {
+      username: '',
+      password: '',
+      passwordConfirm: ''
+    }, 
     values: {
       username: '',
       name: '',
@@ -34,7 +38,7 @@ const RegisterPage = () => {
       <form action={formAction} className="space-y-2">
         <div>
           <div>
-            {state.error && <p style={{ color: "red" }}>{state.error}</p>}
+            {state.errors?.username && <p style={{ color: "red" }} data-testid='username-error'>{state.errors?.username}</p>}
           </div>
           <label className="text-gray-500 text-s">
             Username 
@@ -49,19 +53,25 @@ const RegisterPage = () => {
           </label>
         </div>
         <div>
+          <div>
+            {state.errors?.password && <p style={{ color: "red" }} data-testid='password-error'>{state.errors?.password}</p>}
+          </div>
           <label className="text-gray-500 text-s">
             Password 
             <input type="password" name="password" defaultValue={state.values?.password} required className="border rounded p-1"/>
           </label>
         </div>
         <div>
+          <div>
+            {state.errors?.passwordConfirm && <p style={{ color: "red" }} data-testid='passwordConfirm-error'>{state.errors?.passwordConfirm}</p>}
+          </div>
           <label className="text-gray-500 text-s">
-            Confirm password 
+            Confirm Password 
             <input type="password" name="passwordConfirm" defaultValue={state.values?.passwordConfirm} required className="border rounded p-1"/>
           </label>
 
         </div>
-        <button type="submit" className="border rounded p-1 hover:bg-emerald-200">Register</button>
+        <button type="submit" data-testid='register-button' className="border rounded p-1 hover:bg-emerald-200">Register</button>
       </form>
     </div>
   )
