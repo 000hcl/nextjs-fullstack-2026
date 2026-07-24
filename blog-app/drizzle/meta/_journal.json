@@ -43,6 +43,13 @@
       "when": 1784713872017,
       "tag": "0005_shallow_ultimatum",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1784725527138,
+      "tag": "0006_tranquil_warbound",
+      "breakpoints": true
     }
   ]
 }

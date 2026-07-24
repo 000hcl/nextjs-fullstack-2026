@@ -1,6 +1,8 @@
 import { notFound } from "next/navigation"
 import { getBlogById } from "../../services/blogs"
 import { likeBlog } from "@/app/actions/blogs"
+import { blogInReadingList } from "@/app/services/readinglist"
+import { addReading } from "@/app/actions/readinglist"
 
 const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   const { id } = await params
@@ -9,6 +11,8 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
   if (!blog) {
     notFound()
   }
+
+  const inList = await blogInReadingList(blog.id)
 
   return (
     <div className="max-w-2xl mx-auto p-6">
@@ -22,6 +26,13 @@ const BlogPage = async ({ params }: { params: Promise<{ id: string }> }) => {
           like
         </button>
       </form>
+      <form action={addReading}>
+        <input type="hidden" name="id" value={blog.id} />
+        {!inList ? <button type="submit" className="border rounded p-1 hover:bg-emerald-200">
+          add to reading list</button> :
+          <button disabled={true} className="border rounded p-1 bg-gray-300">already added to reading list</button>}
+      </form>
+      
     </div>
   )
 }
