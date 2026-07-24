@@ -4,13 +4,16 @@ import { readingList } from "../../db/schema"
 import { getCurrentUser } from "./session"
 import { getBlogById } from "./blogs"
 
-export const getReadingList = async () => {
+export const getReadingList = async (read: boolean) => {
   const user = await getCurrentUser()
   if (!user) {
     throw new Error("Not logged in")
   }
   const readinglist = await db.query.readingList.findMany({
-    where: eq(readingList.userId, user.id),
+    where: and(
+      eq(readingList.userId, user.id),
+      eq(readingList.read, read)
+    ),
     with: { blog: true }
   })
   return readinglist
