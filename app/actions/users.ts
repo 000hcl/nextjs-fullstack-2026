@@ -16,7 +16,7 @@ type UserState = {
     passwordConfirm?: string
   }
 
-  values: {
+  values?: {
     username: string,
     name: string,
     password: string,
